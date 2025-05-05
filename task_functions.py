@@ -60,15 +60,34 @@ def task_update(args, file_path):
     if verify_create_json(file_path): # Verify that the json file exists
         with open(file_path, "r") as file:
             data = json.load(file) # We load the stored data
-            if data:
+
+            if data: # We verify that the json file has tasks to be updated
                 data[str(args.id)]["description"] = str(args.description) # Update description
                 data[str(args.id)]["updateAt"] = str(present_date) # Update updateAt
 
                 with open(file_path, "w", encoding="utf-8") as file:
-                    json.dump(data, file, indent=4, ensure_ascii=False)
+                    json.dump(data, file, indent=4, ensure_ascii=False) # Update the json file
                     print(f"Tarea con el id: {args.id} actualizada")
             else:
                 print("No existen tareas, crea una tarea primero con el comando add")
 
     else:
         return "No existe el archivo de tarea, asi que no puedes actualizar"
+
+def task_delete(args, file_path):
+    '''Funtion to delete task'''
+
+    if verify_create_json(file_path): # Verify that the json file exists
+        with open(file_path, "r") as file:
+            data = json.load(file) # We load the stored data
+
+            if data:
+                del data[str(args.id)] # Delete task
+
+                with open(file_path, "w", encoding="utf-8") as file:
+                    json.dump(data, file, indent=4, ensure_ascii=False)
+                    print(f"Tarea con el id: {args.id} eliminada")
+            else:
+                print("No existen tareas, crea una tarea primero con el comando add")
+    else:
+        return "No existe el archivo de tarea, asi que no puedes eliminar"

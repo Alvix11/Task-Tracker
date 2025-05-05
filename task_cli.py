@@ -1,5 +1,5 @@
 import argparse
-from task_functions import task_add, task_update
+from task_functions import task_add, task_update, task_delete
 
 FILE_PATH = "tasks.json" # File name json
 
@@ -30,7 +30,7 @@ def main():
     elif args.command == "update":
         task_update(args, FILE_PATH)
     elif args.command == "delete":
-        pass
+        task_delete(args, FILE_PATH)
 
 if __name__ == "__main__":
     '''Run the application'''
