@@ -72,7 +72,7 @@ def task_update(args, file_path):
                 print("No existen tareas, crea una tarea primero con el comando add")
 
     else:
-        return "No existe el archivo de tarea, asi que no puedes actualizar"
+        print("No existe el archivo de tarea, asi que no puedes actualizar")
 
 def task_delete(args, file_path):
     '''Funtion to delete task'''
@@ -85,9 +85,29 @@ def task_delete(args, file_path):
                 del data[str(args.id)] # Delete task
 
                 with open(file_path, "w", encoding="utf-8") as file:
-                    json.dump(data, file, indent=4, ensure_ascii=False)
+                    json.dump(data, file, indent=4, ensure_ascii=False) # Update the json file
                     print(f"Tarea con el id: {args.id} eliminada")
             else:
                 print("No existen tareas, crea una tarea primero con el comando add")
     else:
-        return "No existe el archivo de tarea, asi que no puedes eliminar"
+        print("No existe el archivo de tarea, asi que no puedes eliminar")
+
+def task_list_all(args, file_path):
+    '''Funtion to list all tasks'''
+
+    if verify_create_json(file_path): # Verify that the json file exists
+        with open(file_path, "r") as file:
+            data = json.load(file) # We load the stored data
+
+            if data:
+                for key, value in data.items():
+                    print(f"\033[94mTask ID:\033[0m {key}")
+                    print(f"\033[93m➤ Description:\033[0m {value['description']}")
+                    print(f"\033[93m➤ Status:\033[0m {value['status']}")
+                    print(f"\033[93m➤ Add:\033[0m {value['createdAt']}")
+                    print(f"\033[93m➤ Update:\033[0m {value['updateAt']}")
+                    print("─" * 30)
+            else:
+                print("No existen tareas, crea una tarea primero con el comando add")
+    else:
+        print("No existe el archivo de tarea, asi que no tienes tareas para listar")
