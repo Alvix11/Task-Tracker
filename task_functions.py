@@ -25,7 +25,7 @@ def task_add(args, file_path):
             # Data to be stored in the json file
             datas[str(id)] = {
                     "description": str(args.description),
-                    "status": "to do",
+                    "status": "to-do",
                     "createdAt": str(present_date),
                     "updateAt": "",
                 }
@@ -38,7 +38,7 @@ def task_add(args, file_path):
         # Data to be stored in the json file
         data[str(id)] = {
             "description": str(args.description),
-            "status": "to do",
+            "status": "to-do",
             "createdAt": str(present_date),
             "updateAt": "",
         }
@@ -92,8 +92,31 @@ def task_delete(args, file_path):
     else:
         print("No existe el archivo de tarea, asi que no puedes eliminar")
 
-def task_list_all(args, file_path):
-    '''Funtion to list all tasks'''
+def task_mark_in_progress(args, file_path):
+    '''Function to mark tasks in progress'''
+
+    # We obtain the current date and time, and give it a better format.
+    present_date = datetime.now() 
+    present_date = present_date.strftime("%A %d de %B, %H:%M")
+
+    if verify_create_json(file_path):
+        with open(file_path, "r") as file:
+            data = json.load(file)
+
+            if data:
+                data[str(args.id)]["status"] = "in-progress" # Update status
+                data[str(args.id)]["updateAt"] = str(present_date) # Update updateAt
+
+                with open(file_path, "w", encoding="utf-8") as file:
+                    json.dump(data, file, indent=4, ensure_ascii=False) # Update the json file
+                    print(f"Tarea con el id: {args.id} marcada en progreso")
+            else:
+                print("No existen tareas, crea una tarea primero con el comando add")
+    else:
+        print("No existe el archivo de tareas")
+
+def task_list_all(file_path):
+    '''Function to list all tasks'''
 
     if verify_create_json(file_path): # Verify that the json file exists
         with open(file_path, "r") as file:
@@ -101,6 +124,7 @@ def task_list_all(args, file_path):
 
             if data:
                 for key, value in data.items():
+                    # We display the tasks with customized formatting with colors (ANSI Escape Codes)
                     print(f"\033[94mTask ID:\033[0m {key}")
                     print(f"\033[93m➤ Description:\033[0m {value['description']}")
                     print(f"\033[93m➤ Status:\033[0m {value['status']}")

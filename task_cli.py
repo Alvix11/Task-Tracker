@@ -1,5 +1,5 @@
 import argparse
-from task_functions import task_add, task_update, task_delete, task_list_all
+from task_functions import task_add, task_update, task_delete, task_list_all, task_mark_in_progress
 
 FILE_PATH = "tasks.json" # File name json
 
@@ -20,6 +20,10 @@ add_parser.add_argument("description", type=str, help="Update description")
 add_parser = subparser.add_parser("delete", help="Task delete")
 add_parser.add_argument("id", type=int, help="Task id")
 
+# Subcommand mark-in-progress
+add_parser = subparser.add_parser("mark-in-progress", help="Mark a task as in progress")
+add_parser.add_argument("id", type=int, help="Task id")
+
 # Subcommand list all
 add_parser = subparser.add_parser("list", help="List all task")
 
@@ -34,8 +38,10 @@ def main():
         task_update(args, FILE_PATH)
     elif args.command == "delete":
         task_delete(args, FILE_PATH)
+    elif args.command == "mark-in-progress":
+        task_mark_in_progress(args, FILE_PATH)
     elif args.command == "list":
-        task_list_all(args, FILE_PATH)
+        task_list_all(FILE_PATH)
 
 if __name__ == "__main__":
     '''Run the application'''
