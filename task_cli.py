@@ -1,5 +1,5 @@
 import argparse
-from task_functions import task_add
+from task_functions import task_add, task_update
 
 FILE_PATH = "tasks.json" # File name json
 
@@ -24,7 +24,7 @@ def main():
     if args.command == "add":
         task_add(args, FILE_PATH)
     elif args.command == "update":
-        print("hola")
+        task_update(args, FILE_PATH)
 
 if __name__ == "__main__":
     '''Run the application'''
