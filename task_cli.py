@@ -29,6 +29,8 @@ def main():
         task_add(args, FILE_PATH)
     elif args.command == "update":
         task_update(args, FILE_PATH)
+    elif args.command == "delete":
+        pass
 
 if __name__ == "__main__":
     '''Run the application'''
