@@ -153,7 +153,7 @@ def task_mark_done(args, file_path):
         print("No existe el archivo de tareas")
 
 
-def task_list_all(file_path):
+def task_list_all(args, file_path):
     '''Function to list all tasks'''
 
     if verify_create_json(file_path): # Verify that the json file exists
@@ -161,14 +161,26 @@ def task_list_all(file_path):
             data = json.load(file) # We load the stored data
 
             if data:
-                for key, value in data.items():
-                    # We display the tasks with customized formatting with colors (ANSI Escape Codes)
-                    print(f"\033[94mTask ID:\033[0m {key}")
-                    print(f"\033[93m➤ Description:\033[0m {value['description']}")
-                    print(f"\033[93m➤ Status:\033[0m {value['status']}")
-                    print(f"\033[93m➤ Add:\033[0m {value['createdAt']}")
-                    print(f"\033[93m➤ Update:\033[0m {value['updateAt']}")
-                    print("─" * 30)
+                if args.status == None:
+                    for key, value in data.items():
+                        # We display the tasks with customized formatting with colors (ANSI Escape Codes)
+                        print(f"\033[94mTask ID:\033[0m {key}")
+                        print(f"\033[93m➤ Description:\033[0m {value['description']}")
+                        print(f"\033[93m➤ Status:\033[0m {value['status']}")
+                        print(f"\033[93m➤ Add:\033[0m {value['createdAt']}")
+                        print(f"\033[93m➤ Update:\033[0m {value['updateAt']}")
+                        print("─" * 30)
+                elif args.status == "done":
+                    for key, value in data.items():
+                        if value["status"] == "done":
+                            # We display the tasks with customized formatting with colors (ANSI Escape Codes)
+                            print(f"\033[94mTask ID:\033[0m {key}")
+                            print(f"\033[93m➤ Description:\033[0m {value['description']}")
+                            print(f"\033[93m➤ Status:\033[0m {value['status']}")
+                            print(f"\033[93m➤ Add:\033[0m {value['createdAt']}")
+                            print(f"\033[93m➤ Update:\033[0m {value['updateAt']}")
+                            print("─" * 30)
+
             else:
                 print("No existen tareas, crea una tarea primero con el comando add")
     else:

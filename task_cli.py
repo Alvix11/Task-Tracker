@@ -28,8 +28,16 @@ add_parser.add_argument("id", type=int, help="Task id")
 add_parser = subparser.add_parser("mark-done", help="Mark a task as done")
 add_parser.add_argument("id", type=int, help="Task id")
 
-# Subcommand list all
+# Subcommand list all tasks
 add_parser = subparser.add_parser("list", help="List all task")
+add_parser.add_argument(
+                        "status", 
+                        nargs="?", 
+                        choices=["done", "to-do", "in-progress"],
+                        default=None, 
+                        help="Filter tasks"
+                        )
+
 
 # The arguments provided by the user from the command line are parsed.
 args = parser.parse_args()           
@@ -47,7 +55,8 @@ def main():
     elif args.command  == "mark-done":
         task_mark_done(args, FILE_PATH)
     elif args.command == "list":
-        task_list_all(FILE_PATH)
+        task_list_all(args, FILE_PATH)
+            
 
 if __name__ == "__main__":
     '''Run the application'''
