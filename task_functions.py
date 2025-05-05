@@ -62,12 +62,17 @@ def task_update(args, file_path):
             data = json.load(file) # We load the stored data
 
             if data: # We verify that the json file has tasks to be updated
-                data[str(args.id)]["description"] = str(args.description) # Update description
-                data[str(args.id)]["updateAt"] = str(present_date) # Update updateAt
 
-                with open(file_path, "w", encoding="utf-8") as file:
-                    json.dump(data, file, indent=4, ensure_ascii=False) # Update the json file
-                    print(f"Tarea con el id: {args.id} actualizada")
+                if str(args.id) in data: # We verify that the id exists
+                    
+                    data[str(args.id)]["description"] = str(args.description) # Update description
+                    data[str(args.id)]["updateAt"] = str(present_date) # Update updateAt
+
+                    with open(file_path, "w", encoding="utf-8") as file:
+                        json.dump(data, file, indent=4, ensure_ascii=False) # Update the json file
+                        print(f"Tarea con el id: {args.id} actualizada")
+                else:
+                    print(f"La tarea con el id: {args.id} no existe")
             else:
                 print("No existen tareas, crea una tarea primero con el comando add")
 
@@ -82,11 +87,14 @@ def task_delete(args, file_path):
             data = json.load(file) # We load the stored data
 
             if data:
-                del data[str(args.id)] # Delete task
+                if str(args.id) in data: # We verify that the id exists
+                    del data[str(args.id)] # Delete task
 
-                with open(file_path, "w", encoding="utf-8") as file:
-                    json.dump(data, file, indent=4, ensure_ascii=False) # Update the json file
-                    print(f"Tarea con el id: {args.id} eliminada")
+                    with open(file_path, "w", encoding="utf-8") as file:
+                        json.dump(data, file, indent=4, ensure_ascii=False) # Update the json file
+                        print(f"Tarea con el id: {args.id} eliminada")
+                else:
+                    print(f"La tarea con el id: {args.id} no existe")
             else:
                 print("No existen tareas, crea una tarea primero con el comando add")
     else:
@@ -104,12 +112,15 @@ def task_mark_in_progress(args, file_path):
             data = json.load(file)
 
             if data:
-                data[str(args.id)]["status"] = "in-progress" # Update status
-                data[str(args.id)]["updateAt"] = str(present_date) # Update updateAt
+                if str(args.id) in data: # We verify that the id exists
+                    data[str(args.id)]["status"] = "in-progress" # Update status
+                    data[str(args.id)]["updateAt"] = str(present_date) # Update updateAt
 
-                with open(file_path, "w", encoding="utf-8") as file:
-                    json.dump(data, file, indent=4, ensure_ascii=False) # Update the json file
-                    print(f"Tarea con el id: {args.id} marcada en progreso")
+                    with open(file_path, "w", encoding="utf-8") as file:
+                        json.dump(data, file, indent=4, ensure_ascii=False) # Update the json file
+                        print(f"Tarea con el id: {args.id} marcada en progreso")
+                else:
+                    print(f"La tarea con el id: {args.id} no existe")
             else:
                 print("No existen tareas, crea una tarea primero con el comando add")
     else:
@@ -127,12 +138,15 @@ def task_mark_done(args, file_path):
             data = json.load(file)
 
             if data:
-                data[str(args.id)]["status"] = "done" # Update status
-                data[str(args.id)]["updateAt"] = str(present_date) # Update updateAt
+                if str(args.id) in data:
+                    data[str(args.id)]["status"] = "done" # Update status
+                    data[str(args.id)]["updateAt"] = str(present_date) # Update updateAt
 
-                with open(file_path, "w", encoding="utf-8") as file:
-                    json.dump(data, file, indent=4, ensure_ascii=False) # Update the json file
-                    print(f"Tarea con el id: {args.id} marcada como hecha")
+                    with open(file_path, "w", encoding="utf-8") as file:
+                        json.dump(data, file, indent=4, ensure_ascii=False) # Update the json file
+                        print(f"Tarea con el id: {args.id} marcada como hecha")
+                else:
+                    print(f"La tarea con el id: {args.id} no existe")
             else:
                 print("No existen tareas, crea una tarea primero con el comando add")
     else:
