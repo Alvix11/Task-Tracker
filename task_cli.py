@@ -1,5 +1,5 @@
 import argparse
-from task_functions import task_add, task_update, task_delete, task_list_all, task_mark_in_progress
+from task_functions import task_add, task_update, task_delete, task_list_all, task_mark_in_progress, task_mark_done
 
 FILE_PATH = "tasks.json" # File name json
 
@@ -24,6 +24,10 @@ add_parser.add_argument("id", type=int, help="Task id")
 add_parser = subparser.add_parser("mark-in-progress", help="Mark a task as in progress")
 add_parser.add_argument("id", type=int, help="Task id")
 
+# Subcommand mark-done
+add_parser = subparser.add_parser("mark-done", help="Mark a task as done")
+add_parser.add_argument("id", type=int, help="Task id")
+
 # Subcommand list all
 add_parser = subparser.add_parser("list", help="List all task")
 
@@ -40,6 +44,8 @@ def main():
         task_delete(args, FILE_PATH)
     elif args.command == "mark-in-progress":
         task_mark_in_progress(args, FILE_PATH)
+    elif args.command  == "mark-done":
+        task_mark_done(args, FILE_PATH)
     elif args.command == "list":
         task_list_all(FILE_PATH)
 
