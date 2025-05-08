@@ -12,3 +12,8 @@ def read_json(file_path):
     with open(file_path, "r") as file:
         datas = json.load(file)
     return datas
+
+def write_json(file_path, datas):
+    '''Function to write json files'''
+    with open(file_path, "w", encoding="utf-8") as file:
+        json.dump(datas, file, indent=4, ensure_ascii=False)
