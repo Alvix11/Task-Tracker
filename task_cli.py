@@ -33,7 +33,7 @@ add_parser = subparser.add_parser("list", help="List all task")
 add_parser.add_argument(
                         "status", 
                         nargs="?", 
-                        choices=["done", "to-do", "in-progress"],
+                        choices=["done", "todo", "in-progress"],
                         default=None, 
                         help="Filter tasks"
                         )

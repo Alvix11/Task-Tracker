@@ -25,7 +25,7 @@ def task_add(args, file_path):
             # Data to be stored in the json file
             datas[str(id)] = {
                     "description": str(args.description),
-                    "status": "to-do",
+                    "status": "todo",
                     "createdAt": str(present_date),
                     "updateAt": "",
                 }
@@ -38,7 +38,7 @@ def task_add(args, file_path):
         # Data to be stored in the json file
         data[str(id)] = {
             "description": str(args.description),
-            "status": "to-do",
+            "status": "todo",
             "createdAt": str(present_date),
             "updateAt": "",
         }
@@ -172,7 +172,7 @@ def task_list_all(args, file_path):
                         print("─" * 30)
                 elif args.status == "done":
                     for key, value in data.items():
-                        if value["status"] == "done":
+                        if value["status"] == args.status:
                             # We display the tasks with customized formatting with colors (ANSI Escape Codes)
                             print(f"\033[94mTask ID:\033[0m {key}")
                             print(f"\033[93m➤ Description:\033[0m {value['description']}")
@@ -180,7 +180,26 @@ def task_list_all(args, file_path):
                             print(f"\033[93m➤ Add:\033[0m {value['createdAt']}")
                             print(f"\033[93m➤ Update:\033[0m {value['updateAt']}")
                             print("─" * 30)
-
+                elif args.status == "todo":
+                    for key, value in data.items():
+                        if value["status"] == args.status:
+                            # We display the tasks with customized formatting with colors (ANSI Escape Codes)
+                            print(f"\033[94mTask ID:\033[0m {key}")
+                            print(f"\033[93m➤ Description:\033[0m {value['description']}")
+                            print(f"\033[93m➤ Status:\033[0m {value['status']}")
+                            print(f"\033[93m➤ Add:\033[0m {value['createdAt']}")
+                            print(f"\033[93m➤ Update:\033[0m {value['updateAt']}")
+                            print("─" * 30)
+                elif args.status == "in-progress":
+                    for key, value in data.items():
+                        if value["status"] == args.status:
+                            # We display the tasks with customized formatting with colors (ANSI Escape Codes)
+                            print(f"\033[94mTask ID:\033[0m {key}")
+                            print(f"\033[93m➤ Description:\033[0m {value['description']}")
+                            print(f"\033[93m➤ Status:\033[0m {value['status']}")
+                            print(f"\033[93m➤ Add:\033[0m {value['createdAt']}")
+                            print(f"\033[93m➤ Update:\033[0m {value['updateAt']}")
+                            print("─" * 30)
             else:
                 print("No existen tareas, crea una tarea primero con el comando add")
     else:
