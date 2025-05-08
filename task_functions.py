@@ -1,5 +1,5 @@
 from utils import actual_date_and_time
-from check_json import verify_create_json, read_json
+from check_json import verify_create_json, read_json, write_json
 import json
 
 class TaskManager():
@@ -10,6 +10,9 @@ class TaskManager():
         # Dictionary to correctly store data in the json file
         data = {}
 
+        # Main id used if json file does not exist
+        id = 1
+
         # We obtain the current date and time
         present_date = actual_date_and_time()
 
@@ -18,9 +21,6 @@ class TaskManager():
 
             if datas: # We verify that there are already saved tasks to get the last id and increment it.
                 id = max(map(int, datas.keys())) + 1
-            else:
-                # Main id used if json file does not exist
-                id = 1
 
             # Data to be stored in the json file
             datas[str(id)] = {
@@ -29,10 +29,8 @@ class TaskManager():
                     "createdAt": str(present_date),
                     "updateAt": "",
                 }
-            with open(file_path, "w", encoding="utf-8") as file:
-                # We add the new task with a message indicating its id
-                json.dump(datas, file, indent=4, ensure_ascii=False)
-                print(f"Tarea agregada con el id: {id}")
+            write_json(file_path, datas) # Write the task to the json file
+            print(f"Tarea agregada con el id: {id}")
         else:
             # Data to be stored in the json file
             data[str(id)] = {
@@ -42,10 +40,8 @@ class TaskManager():
                 "updateAt": "",
             }
             try:
-                with open(file_path, "w", encoding="utf-8") as file:
-                    # Create the json file and add the new task indicating its id
-                    json.dump(data, file, indent=4, ensure_ascii=False)
-                    print(f"Tarea creada con el id: {id}")
+                write_json(file_path, data) # Write the task to the json file
+                print(f"Tarea creada con el id: {id}")
             except Exception as e:
                 print(f"Ocurrio un error {e}")
 
