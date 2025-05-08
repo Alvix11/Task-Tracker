@@ -1,5 +1,5 @@
 import argparse
-from task_functions import task_add, task_update, task_delete, task_list_all, task_mark_in_progress, task_mark_done
+from task_functions import TaskManager
 
 FILE_PATH = "tasks.json" # File name json
 
@@ -45,17 +45,17 @@ args = parser.parse_args()
 def main():  
     '''Here you will control the flow of the CLI application.'''
     if args.command == "add":
-        task_add(args, FILE_PATH)
+        TaskManager.task_add(args, FILE_PATH)
     elif args.command == "update":
-        task_update(args, FILE_PATH)
+        TaskManager.task_update(args, FILE_PATH)
     elif args.command == "delete":
-        task_delete(args, FILE_PATH)
+        TaskManager.task_delete(args, FILE_PATH)
     elif args.command == "mark-in-progress":
-        task_mark_in_progress(args, FILE_PATH)
+        TaskManager.task_mark_in_progress(args, FILE_PATH)
     elif args.command  == "mark-done":
-        task_mark_done(args, FILE_PATH)
+        TaskManager.task_mark_done(args, FILE_PATH)
     elif args.command == "list":
-        task_list_all(args, FILE_PATH)
+        TaskManager.task_list_all(args, FILE_PATH)
             
 
 if __name__ == "__main__":
