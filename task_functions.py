@@ -52,23 +52,21 @@ class TaskManager():
         present_date = actual_date_and_time()
 
         if verify_create_json(file_path): # Verify that the json file exists
-            with open(file_path, "r") as file:
-                data = json.load(file) # We load the stored data
 
-                if data: # We verify that the json file has tasks to be updated
+            data = read_json(file_path) # We load the stored data
 
-                    if str(args.id) in data: # We verify that the id exists
+            if data: # We verify that the json file has tasks to be updated
 
-                        data[str(args.id)]["description"] = str(args.description) # Update description
-                        data[str(args.id)]["updateAt"] = str(present_date) # Update updateAt
+                if str(args.id) in data: # We verify that the id exists
+                    data[str(args.id)]["description"] = str(args.description) # Update description
+                    data[str(args.id)]["updateAt"] = str(present_date) # Update updateAt
 
-                        with open(file_path, "w", encoding="utf-8") as file:
-                            json.dump(data, file, indent=4, ensure_ascii=False) # Update the json file
-                            print(f"Tarea con el id: {args.id} actualizada")
-                    else:
-                        print(f"La tarea con el id: {args.id} no existe")
+                    write_json(file_path, data) # Update the json file
+                    print(f"Tarea con el id: {args.id} actualizada")
                 else:
-                    print("No existen tareas, crea una tarea primero con el comando add")
+                    print(f"La tarea con el id: {args.id} no existe")
+            else:
+                print("No existen tareas para actualizar, crea una tarea primero con el comando add")
 
         else:
             print("No existe el archivo de tarea, asi que no puedes actualizar")
@@ -77,45 +75,39 @@ class TaskManager():
         '''Funtion to delete task'''
 
         if verify_create_json(file_path): # Verify that the json file exists
-            with open(file_path, "r") as file:
-                data = json.load(file) # We load the stored data
+            data = read_json(file_path) # We load the stored data
 
-                if data:
-                    if str(args.id) in data: # We verify that the id exists
-                        del data[str(args.id)] # Delete task
-
-                        with open(file_path, "w", encoding="utf-8") as file:
-                            json.dump(data, file, indent=4, ensure_ascii=False) # Update the json file
-                            print(f"Tarea con el id: {args.id} eliminada")
-                    else:
-                        print(f"La tarea con el id: {args.id} no existe")
+            if data:
+                if str(args.id) in data: # We verify that the id exists
+                    del data[str(args.id)] # Delete task
+                    write_json(file_path, data) # Update the json file
+                    print(f"Tarea con el id: {args.id} eliminada")
                 else:
-                    print("No existen tareas, crea una tarea primero con el comando add")
+                    print(f"La tarea con el id: {args.id} no existe")
+            else:
+                print("No existen tareas, crea una tarea primero con el comando add")
         else:
             print("No existe el archivo de tarea, asi que no puedes eliminar")
 
     def task_mark_in_progress(args, file_path):
         '''Function to mark tasks in progress'''
 
-        # We obtain the current date and time, and give it a better format.
         present_date = actual_date_and_time()
 
         if verify_create_json(file_path):
-            with open(file_path, "r") as file:
-                data = json.load(file)
+            data = read_json(file_path)
 
-                if data:
-                    if str(args.id) in data: # We verify that the id exists
-                        data[str(args.id)]["status"] = "in-progress" # Update status
-                        data[str(args.id)]["updateAt"] = str(present_date) # Update updateAt
+            if data:
+                if str(args.id) in data: # We verify that the id exists
+                    data[str(args.id)]["status"] = "in-progress" # Update status
+                    data[str(args.id)]["updateAt"] = str(present_date) # Update updateAt
 
-                        with open(file_path, "w", encoding="utf-8") as file:
-                            json.dump(data, file, indent=4, ensure_ascii=False) # Update the json file
-                            print(f"Tarea con el id: {args.id} marcada en progreso")
-                    else:
-                        print(f"La tarea con el id: {args.id} no existe")
+                    write_json(file_path, data) # Update the json file
+                    print(f"Tarea con el id: {args.id} marcada en progreso")
                 else:
-                    print("No existen tareas, crea una tarea primero con el comando add")
+                    print(f"La tarea con el id: {args.id} no existe")
+            else:
+                print("No existen tareas, crea una tarea primero con el comando add")
         else:
             print("No existe el archivo de tareas")
 
@@ -126,34 +118,44 @@ class TaskManager():
         present_date = actual_date_and_time()
 
         if verify_create_json(file_path):
-            with open(file_path, "r") as file:
-                data = json.load(file)
+            data = read_json(file_path)
 
-                if data:
-                    if str(args.id) in data:
-                        data[str(args.id)]["status"] = "done" # Update status
-                        data[str(args.id)]["updateAt"] = str(present_date) # Update updateAt
+            if data:
+                if str(args.id) in data:
+                    data[str(args.id)]["status"] = "done" # Update status
+                    data[str(args.id)]["updateAt"] = str(present_date) # Update updateAt
 
-                        with open(file_path, "w", encoding="utf-8") as file:
-                            json.dump(data, file, indent=4, ensure_ascii=False) # Update the json file
-                            print(f"Tarea con el id: {args.id} marcada como hecha")
-                    else:
-                        print(f"La tarea con el id: {args.id} no existe")
+                    write_json(file_path, data) # Update the json file
+                    print(f"Tarea con el id: {args.id} marcada como hecha")
                 else:
-                    print("No existen tareas, crea una tarea primero con el comando add")
+                    print(f"La tarea con el id: {args.id} no existe")
+            else:
+                print("No existen tareas, crea una tarea primero con el comando add")
         else:
             print("No existe el archivo de tareas")
 
 
-    def task_list_all(args, file_path):
+    def tasks_list(args, file_path):
         '''Function to list all tasks'''
         if verify_create_json(file_path): # Verify that the json file exists
-            with open(file_path, "r") as file:
-                data = json.load(file) # We load the stored data
 
-                if data:
-                    if args.status == None:
-                        for key, value in data.items():
+            data = read_json(file_path) # We load the stored data
+
+            if data:
+
+                if args.status == None:
+                    for key, value in data.items():
+                        # We display the tasks with customized formatting with colors (ANSI Escape Codes)
+                        print(f"\033[94mTask ID:\033[0m {key}")
+                        print(f"\033[93m➤ Description:\033[0m {value['description']}")
+                        print(f"\033[93m➤ Status:\033[0m {value['status']}")
+                        print(f"\033[93m➤ Add:\033[0m {value['createdAt']}")
+                        print(f"\033[93m➤ Update:\033[0m {value['updateAt']}")
+                        print("─" * 30)
+
+                elif args.status == "done":
+                    for key, value in data.items():
+                        if value["status"] == args.status:
                             # We display the tasks with customized formatting with colors (ANSI Escape Codes)
                             print(f"\033[94mTask ID:\033[0m {key}")
                             print(f"\033[93m➤ Description:\033[0m {value['description']}")
@@ -161,37 +163,29 @@ class TaskManager():
                             print(f"\033[93m➤ Add:\033[0m {value['createdAt']}")
                             print(f"\033[93m➤ Update:\033[0m {value['updateAt']}")
                             print("─" * 30)
-                    elif args.status == "done":
-                        for key, value in data.items():
-                            if value["status"] == args.status:
-                                # We display the tasks with customized formatting with colors (ANSI Escape Codes)
-                                print(f"\033[94mTask ID:\033[0m {key}")
-                                print(f"\033[93m➤ Description:\033[0m {value['description']}")
-                                print(f"\033[93m➤ Status:\033[0m {value['status']}")
-                                print(f"\033[93m➤ Add:\033[0m {value['createdAt']}")
-                                print(f"\033[93m➤ Update:\033[0m {value['updateAt']}")
-                                print("─" * 30)
-                    elif args.status == "todo":
-                        for key, value in data.items():
-                            if value["status"] == args.status:
-                                # We display the tasks with customized formatting with colors (ANSI Escape Codes)
-                                print(f"\033[94mTask ID:\033[0m {key}")
-                                print(f"\033[93m➤ Description:\033[0m {value['description']}")
-                                print(f"\033[93m➤ Status:\033[0m {value['status']}")
-                                print(f"\033[93m➤ Add:\033[0m {value['createdAt']}")
-                                print(f"\033[93m➤ Update:\033[0m {value['updateAt']}")
-                                print("─" * 30)
-                    elif args.status == "in-progress":
-                        for key, value in data.items():
-                            if value["status"] == args.status:
-                                # We display the tasks with customized formatting with colors (ANSI Escape Codes)
-                                print(f"\033[94mTask ID:\033[0m {key}")
-                                print(f"\033[93m➤ Description:\033[0m {value['description']}")
-                                print(f"\033[93m➤ Status:\033[0m {value['status']}")
-                                print(f"\033[93m➤ Add:\033[0m {value['createdAt']}")
-                                print(f"\033[93m➤ Update:\033[0m {value['updateAt']}")
-                                print("─" * 30)
-                else:
-                    print("No existen tareas, crea una tarea primero con el comando add")
+
+                elif args.status == "todo":
+                    for key, value in data.items():
+                        if value["status"] == args.status:
+                            # We display the tasks with customized formatting with colors (ANSI Escape Codes)
+                            print(f"\033[94mTask ID:\033[0m {key}")
+                            print(f"\033[93m➤ Description:\033[0m {value['description']}")
+                            print(f"\033[93m➤ Status:\033[0m {value['status']}")
+                            print(f"\033[93m➤ Add:\033[0m {value['createdAt']}")
+                            print(f"\033[93m➤ Update:\033[0m {value['updateAt']}")
+                            print("─" * 30)
+                            
+                elif args.status == "in-progress":
+                    for key, value in data.items():
+                        if value["status"] == args.status:
+                            # We display the tasks with customized formatting with colors (ANSI Escape Codes)
+                            print(f"\033[94mTask ID:\033[0m {key}")
+                            print(f"\033[93m➤ Description:\033[0m {value['description']}")
+                            print(f"\033[93m➤ Status:\033[0m {value['status']}")
+                            print(f"\033[93m➤ Add:\033[0m {value['createdAt']}")
+                            print(f"\033[93m➤ Update:\033[0m {value['updateAt']}")
+                            print("─" * 30)
+            else:
+                print("No existen tareas, crea una tarea primero con el comando add")
         else:
             print("No existe el archivo de tarea, asi que no tienes tareas para listar")
