@@ -55,7 +55,7 @@ def main():
     elif args.command  == "mark-done":
         TaskManager.task_mark_done(args, FILE_PATH)
     elif args.command == "list":
-        TaskManager.task_list_all(args, FILE_PATH)
+        TaskManager.tasks_list(args, FILE_PATH)
             
 
 if __name__ == "__main__":
