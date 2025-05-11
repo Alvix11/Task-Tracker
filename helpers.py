@@ -18,6 +18,7 @@ def save_tasks(file_path, data):
         return False
     
 def display_tasks(tasks):
+    '''Function to display tasks'''
     for key, value in tasks.items():
         # We display the tasks with customized formatting with colors (ANSI Escape Codes)
         print(f"\033[94mTask ID:\033[0m {key}")
