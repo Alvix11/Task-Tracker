@@ -8,6 +8,7 @@ class TaskManager():
 
         data = {}
         id = 1
+
         # We obtain the current date and time
         present_date = actual_date_and_time()
 
@@ -24,8 +25,11 @@ class TaskManager():
                     "createdAt": str(present_date),
                     "updateAt": "",
                 }
-            write_json(file_path, datas) # Write the task to the json file
-            print(f"Tarea agregada con el id: {id}")
+            try:
+                write_json(file_path, datas) # Write the task to the json file
+                print(f"Tarea agregada con el id: {id}")
+            except Exception as e:
+                print(f"Ocurrio un error {e}")
         else:
             # Data to be stored in the json file
             data[str(id)] = {
@@ -118,8 +122,8 @@ class TaskManager():
 
             if data:
                 if str(args.id) in data:
-                    data[str(args.id)]["status"] = "done" # Update status
-                    data[str(args.id)]["updateAt"] = str(present_date) # Update updateAt
+                    data[str(args.id)]["status"] = "done" 
+                    data[str(args.id)]["updateAt"] = str(present_date)
                     try:
                         write_json(file_path, data)
                         print(f"Tarea con el id: {args.id} marcada como hecha")
@@ -135,9 +139,8 @@ class TaskManager():
 
     def tasks_list(args, file_path):
         '''Function to list all tasks'''
-        if verify_create_json(file_path): # Verify that the json file exists
-
-            data = read_json(file_path) # We load the stored data
+        if verify_create_json(file_path):
+            data = read_json(file_path)
 
             if data:
 
@@ -154,7 +157,6 @@ class TaskManager():
                 elif args.status == "done":
                     for key, value in data.items():
                         if value["status"] == args.status:
-                            # We display the tasks with customized formatting with colors (ANSI Escape Codes)
                             print(f"\033[94mTask ID:\033[0m {key}")
                             print(f"\033[93m➤ Description:\033[0m {value['description']}")
                             print(f"\033[93m➤ Status:\033[0m {value['status']}")
@@ -165,7 +167,6 @@ class TaskManager():
                 elif args.status == "todo":
                     for key, value in data.items():
                         if value["status"] == args.status:
-                            # We display the tasks with customized formatting with colors (ANSI Escape Codes)
                             print(f"\033[94mTask ID:\033[0m {key}")
                             print(f"\033[93m➤ Description:\033[0m {value['description']}")
                             print(f"\033[93m➤ Status:\033[0m {value['status']}")
@@ -176,7 +177,6 @@ class TaskManager():
                 elif args.status == "in-progress":
                     for key, value in data.items():
                         if value["status"] == args.status:
-                            # We display the tasks with customized formatting with colors (ANSI Escape Codes)
                             print(f"\033[94mTask ID:\033[0m {key}")
                             print(f"\033[93m➤ Description:\033[0m {value['description']}")
                             print(f"\033[93m➤ Status:\033[0m {value['status']}")
