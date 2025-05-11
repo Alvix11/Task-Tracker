@@ -6,12 +6,8 @@ class TaskManager():
     def task_add(args, file_path):
         '''Function to add new tasks'''
 
-        # Dictionary to correctly store data in the json file
         data = {}
-
-        # Main id used if json file does not exist
         id = 1
-
         # We obtain the current date and time
         present_date = actual_date_and_time()
 
@@ -46,22 +42,21 @@ class TaskManager():
 
     def task_update(args, file_path):
         '''Function to update tasks'''
-
-        # We obtain the current date and time
         present_date = actual_date_and_time()
 
-        if verify_create_json(file_path): # Verify that the json file exists
+        if verify_create_json(file_path):
+            data = read_json(file_path)
 
-            data = read_json(file_path) # We load the stored data
-
-            if data: # We verify that the json file has tasks to be updated
+            if data:
 
                 if str(args.id) in data: # We verify that the id exists
                     data[str(args.id)]["description"] = str(args.description) # Update description
                     data[str(args.id)]["updateAt"] = str(present_date) # Update updateAt
-
-                    write_json(file_path, data) # Update the json file
-                    print(f"Tarea con el id: {args.id} actualizada")
+                    try:
+                        write_json(file_path, data) # Update the json file
+                        print(f"Tarea con el id: {args.id} actualizada")
+                    except Exception as e:
+                        print(f"Ocurrio un error {e}")  
                 else:
                     print(f"La tarea con el id: {args.id} no existe")
             else:
@@ -73,14 +68,17 @@ class TaskManager():
     def task_delete(args, file_path):
         '''Funtion to delete task'''
 
-        if verify_create_json(file_path): # Verify that the json file exists
-            data = read_json(file_path) # We load the stored data
+        if verify_create_json(file_path):
+            data = read_json(file_path)
 
             if data:
-                if str(args.id) in data: # We verify that the id exists
-                    del data[str(args.id)] # Delete task
-                    write_json(file_path, data) # Update the json file
-                    print(f"Tarea con el id: {args.id} eliminada")
+                if str(args.id) in data: 
+                    try:
+                        del data[str(args.id)] # Delete task
+                        write_json(file_path, data) 
+                        print(f"Tarea con el id: {args.id} eliminada")
+                    except Exception as e:
+                        print(f"Ocurrio un error {e}")
                 else:
                     print(f"La tarea con el id: {args.id} no existe")
             else:
@@ -90,7 +88,6 @@ class TaskManager():
 
     def task_mark_in_progress(args, file_path):
         '''Function to mark tasks in progress'''
-
         present_date = actual_date_and_time()
 
         if verify_create_json(file_path):
@@ -100,9 +97,11 @@ class TaskManager():
                 if str(args.id) in data: # We verify that the id exists
                     data[str(args.id)]["status"] = "in-progress" # Update status
                     data[str(args.id)]["updateAt"] = str(present_date) # Update updateAt
-
-                    write_json(file_path, data) # Update the json file
-                    print(f"Tarea con el id: {args.id} marcada en progreso")
+                    try:
+                        write_json(file_path, data) # Update the json file
+                        print(f"Tarea con el id: {args.id} marcada en progreso")
+                    except Exception as e:
+                        print(f"Ocurrio un error {e}")
                 else:
                     print(f"La tarea con el id: {args.id} no existe")
             else:
@@ -112,8 +111,6 @@ class TaskManager():
 
     def task_mark_done(args, file_path):
         '''Function to mark tasks in progress'''
-
-        # We obtain the current date and time, and give it a better format.
         present_date = actual_date_and_time()
 
         if verify_create_json(file_path):
@@ -123,9 +120,11 @@ class TaskManager():
                 if str(args.id) in data:
                     data[str(args.id)]["status"] = "done" # Update status
                     data[str(args.id)]["updateAt"] = str(present_date) # Update updateAt
-
-                    write_json(file_path, data) # Update the json file
-                    print(f"Tarea con el id: {args.id} marcada como hecha")
+                    try:
+                        write_json(file_path, data)
+                        print(f"Tarea con el id: {args.id} marcada como hecha")
+                    except Exception as e:
+                        print(f"Ocurrio un error {e}")
                 else:
                     print(f"La tarea con el id: {args.id} no existe")
             else:
