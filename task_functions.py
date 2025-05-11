@@ -1,5 +1,5 @@
 from utils import actual_date_and_time
-from check_json import verify_create_json, read_json, write_json
+from utils import verify_create_json, read_json, write_json
 
 class TaskManager():
 
@@ -13,7 +13,7 @@ class TaskManager():
         present_date = actual_date_and_time()
 
         if verify_create_json(file_path): # Verify that the json file exists
-            datas = read_json(file_path)# We load the stored data
+            datas = read_json(file_path) # We load the stored data
 
             if datas: # We verify that there are already saved tasks to get the last id and increment it.
                 id = max(map(int, datas.keys())) + 1
