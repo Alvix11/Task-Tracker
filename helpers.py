@@ -16,3 +16,13 @@ def save_tasks(file_path, data):
     except Exception as e:
         print(f"Ocurrio un error: {e}")
         return False
+    
+def display_tasks(tasks):
+    for key, value in tasks.items():
+        # We display the tasks with customized formatting with colors (ANSI Escape Codes)
+        print(f"\033[94mTask ID:\033[0m {key}")
+        print(f"\033[93m➤ Description:\033[0m {value['description']}")
+        print(f"\033[93m➤ Status:\033[0m {value['status']}")
+        print(f"\033[93m➤ Add:\033[0m {value['createdAt']}")
+        print(f"\033[93m➤ Update:\033[0m {value['updateAt']}")
+        print("─" * 30)
