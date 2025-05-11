@@ -41,7 +41,6 @@ class Parser():
                                 help="Filter tasks"
                                 )
 
-
-        # The arguments provided by the user from the command line are parsed.
+        # Returns user-supplied arguments from the command line
         return parser.parse_args()           
         

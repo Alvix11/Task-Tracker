@@ -17,8 +17,7 @@ def main():
     elif args.command  == "mark-done":
         TaskManager.task_mark_done(args, file_path)
     elif args.command == "list":
-        TaskManager.tasks_list(args, file_path)
-            
+        TaskManager.tasks_list(args, file_path)       
 
 if __name__ == "__main__":
     '''Run the application'''
