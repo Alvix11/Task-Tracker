@@ -1,5 +1,5 @@
 from utils import actual_date_and_time
-from helpers import load_tasks, save_tasks, display_tasks
+from helpers import load_tasks, save_tasks, display_tasks, is_text
 
 class TaskManager():
 
@@ -14,26 +14,27 @@ class TaskManager():
         if data: # We verify that there are already saved tasks to get the last id and increment it.
             id = max(map(int, data.keys())) + 1
             
-            # Data to be stored in the json file
-            data[str(id)] = {
-                "description": str(args.description),
-                "status": "todo",
-                "createdAt": str(present_date),
-                "updateAt": "",
+            if is_text(args):
+                # Data to be stored in the json file
+                data[str(id)] = {
+                    "description": str(args.description),
+                    "status": "todo",
+                    "createdAt": str(present_date),
+                    "updateAt": "",
                 }
-            
-            save_tasks(file_path, data)
-            print(f"Tarea agregada con el id: {id}")
+                save_tasks(file_path, data)
+                print(f"Tarea agregada con el id: {id}")
         else:
-            # Data to be stored in the json file
-            datas[str(id)] = {
-                "description": str(args.description),
-                "status": "todo",
-                "createdAt": str(present_date),
-                "updateAt": "",
-            }
-            save_tasks(file_path, datas)
-            print(f"Tarea creada con el id: {id}")
+            if is_text(args):
+                # Data to be stored in the json file
+                datas[str(id)] = {
+                    "description": str(args.description),
+                    "status": "todo",
+                    "createdAt": str(present_date),
+                    "updateAt": "",
+                }
+                save_tasks(file_path, datas)
+                print(f"Tarea creada con el id: {id}")
 
     def task_update(args, file_path):
         '''Function to update tasks'''
@@ -42,10 +43,11 @@ class TaskManager():
         data = load_tasks(file_path)
         if data:
             if str(args.id) in data: # We verify that the id exists
-                data[str(args.id)]["description"] = str(args.description) # Update description
-                data[str(args.id)]["updateAt"] = str(present_date) # Update updateAt
-                save_tasks(file_path, data)
-                print(f"Tarea con el id: {args.id} actualizada") 
+                if is_text(args):
+                    data[str(args.id)]["description"] = str(args.description) # Update description
+                    data[str(args.id)]["updateAt"] = str(present_date) # Update updateAt
+                    save_tasks(file_path, data)
+                    print(f"Tarea con el id: {args.id} actualizada") 
             else:
                 print(f"La tarea con el id: {args.id} no existe")
         else:
