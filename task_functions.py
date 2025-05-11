@@ -5,12 +5,9 @@ class TaskManager():
 
     def task_add(args, file_path):
         '''Function to add new tasks'''
-
-        datas = {}
-        id = 1
-
-        # We obtain the current date and time
-        present_date = actual_date_and_time()
+        datas = {} # Dictionary to be used if the file does not exist
+        id = 1 # Id to be used if no tasks are created
+        present_date = actual_date_and_time() # We obtain the current date and time
 
         data = load_tasks(file_path)
 
