@@ -1,5 +1,5 @@
 from utils import actual_date_and_time
-from helpers import load_tasks, save_tasks
+from helpers import load_tasks, save_tasks, display_tasks
 
 class TaskManager():
 
@@ -103,44 +103,11 @@ class TaskManager():
     def tasks_list(args, file_path):
         '''Function to list all tasks'''
         data = load_tasks(file_path)
-
         if data:
-            if args.status == None:
-                for key, value in data.items():
-                    # We display the tasks with customized formatting with colors (ANSI Escape Codes)
-                    print(f"\033[94mTask ID:\033[0m {key}")
-                    print(f"\033[93m➤ Description:\033[0m {value['description']}")
-                    print(f"\033[93m➤ Status:\033[0m {value['status']}")
-                    print(f"\033[93m➤ Add:\033[0m {value['createdAt']}")
-                    print(f"\033[93m➤ Update:\033[0m {value['updateAt']}")
-                    print("─" * 30)
-            elif args.status == "done":
-                for key, value in data.items():
-                    if value["status"] == args.status:
-                        print(f"\033[94mTask ID:\033[0m {key}")
-                        print(f"\033[93m➤ Description:\033[0m {value['description']}")
-                        print(f"\033[93m➤ Status:\033[0m {value['status']}")
-                        print(f"\033[93m➤ Add:\033[0m {value['createdAt']}")
-                        print(f"\033[93m➤ Update:\033[0m {value['updateAt']}")
-                        print("─" * 30)
-            elif args.status == "todo":
-                for key, value in data.items():
-                    if value["status"] == args.status:
-                        print(f"\033[94mTask ID:\033[0m {key}")
-                        print(f"\033[93m➤ Description:\033[0m {value['description']}")
-                        print(f"\033[93m➤ Status:\033[0m {value['status']}")
-                        print(f"\033[93m➤ Add:\033[0m {value['createdAt']}")
-                        print(f"\033[93m➤ Update:\033[0m {value['updateAt']}")
-                        print("─" * 30)
-                        
-            elif args.status == "in-progress":
-                for key, value in data.items():
-                    if value["status"] == args.status:
-                        print(f"\033[94mTask ID:\033[0m {key}")
-                        print(f"\033[93m➤ Description:\033[0m {value['description']}")
-                        print(f"\033[93m➤ Status:\033[0m {value['status']}")
-                        print(f"\033[93m➤ Add:\033[0m {value['createdAt']}")
-                        print(f"\033[93m➤ Update:\033[0m {value['updateAt']}")
-                        print("─" * 30)
+            if args.status:
+                filtered = {k: v for k, v in data.items() if v["status"] == args.status}
+            else:
+                filtered = data
+            display_tasks(filtered)
         else:
             print("No existen tareas, crea una tarea primero con el comando add")
