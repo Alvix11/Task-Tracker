@@ -2,6 +2,7 @@ import os
 import json
 
 def verify_create_json(file_path):
+    #Function to verify that the json file exists
     if not os.path.exists(file_path):
         return False # Return false if the json file does not exist
     else:
