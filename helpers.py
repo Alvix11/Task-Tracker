@@ -27,3 +27,16 @@ def display_tasks(tasks):
         print(f"\033[93m➤ Add:\033[0m {value['createdAt']}")
         print(f"\033[93m➤ Update:\033[0m {value['updateAt']}")
         print("─" * 30)
+
+def is_text(args):
+    '''Function to verify that the task passed by the user is not blank or numbers.'''
+    desc = str(args.description).strip()
+    if not desc:
+        print('Ingresa una tarea válida, no espacios en blanco')
+        return False
+    try:
+        float(desc)
+        print('Ingresa una tarea valida, no numeros')
+        return False
+    except ValueError:
+        return True
