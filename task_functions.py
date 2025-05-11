@@ -98,11 +98,11 @@ class TaskManager():
             data = read_json(file_path)
 
             if data:
-                if str(args.id) in data: # We verify that the id exists
-                    data[str(args.id)]["status"] = "in-progress" # Update status
-                    data[str(args.id)]["updateAt"] = str(present_date) # Update updateAt
+                if str(args.id) in data: 
+                    data[str(args.id)]["status"] = "in-progress"
+                    data[str(args.id)]["updateAt"] = str(present_date)
                     try:
-                        write_json(file_path, data) # Update the json file
+                        write_json(file_path, data)
                         print(f"Tarea con el id: {args.id} marcada en progreso")
                     except Exception as e:
                         print(f"Ocurrio un error {e}")
