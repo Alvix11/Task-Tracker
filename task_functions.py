@@ -1,6 +1,5 @@
 from utils import actual_date_and_time
 from check_json import verify_create_json, read_json, write_json
-import json
 
 class TaskManager():
 
