@@ -3,10 +3,11 @@ from settings import get_parser
 
 args = get_parser()
 
-def main():  
-    '''Here you will control the flow of the CLI application.'''
+def main(): 
+    '''Run the application''' 
     manager = TaskManager()
 
+    # Here you will control the flow of the CLI application.
     if args.command == "add":
         manager.task_add(args)
     elif args.command == "update":
@@ -18,8 +19,9 @@ def main():
     elif args.command  == "mark-done":
         manager.task_mark_done(args)
     elif args.command == "list":
-        manager.tasks_list(args)       
+        manager.tasks_list(args)
+    else:
+        print("Comando no reconocido. Usa --help para ver las opciones.")   
 
 if __name__ == "__main__":
-    '''Run the application'''
     main()
