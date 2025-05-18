@@ -100,10 +100,10 @@ python main.py delete 3
 
 ---
 
-## Url
+## URL of the roadmap.sh project
 
 ```bash
-https://github.com/Alvix11/Task-Tracker
+https://roadmap.sh/projects/task-tracker
 ```
 
 Contributions and suggestions are welcome!
