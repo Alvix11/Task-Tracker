@@ -21,7 +21,7 @@ def main():
     elif args.command == "list":
         manager.tasks_list(args)
     else:
-        print("Comando no reconocido. Usa --help para ver las opciones.")   
+        print("Command not recognized. Use --help to see the options.")   
 
 if __name__ == "__main__":
     main()

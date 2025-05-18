@@ -14,7 +14,7 @@ def save_tasks(file_path, data):
         write_json(file_path, data)
         return True
     except Exception as e:
-        print(f"Ocurrio un error: {e}")
+        print(f"An error occurred: {e}")
         return False
     
 def display_tasks(tasks):
@@ -32,11 +32,11 @@ def is_text(args):
     '''Function to verify that the task passed by the user is not blank or numbers.'''
     desc = str(args.description).strip()
     if not desc:
-        print('Ingresa una tarea válida, no espacios en blanco')
+        print('Enter a valid task, no blanks')
         return False
     try:
         float(desc)
-        print('Ingresa una tarea valida, no numeros')
+        print('Enter a valid task, not numbers')
         return False
     except ValueError:
         return True
